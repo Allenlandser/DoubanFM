@@ -90,7 +90,8 @@ class Client(object):
 		self.play()
 		while True:
 			self.display()
-			choice = getch.getch().lower()
+			i = getch._Getch()
+			choice = i()
 			if choice == 'p' and self.is_playing == False:
 				self.play()
 			elif choice == 's' and self.is_playing == True:
