@@ -9,4 +9,4 @@ class Song(object):
 		self.length = song_data['length']
 
 	def get_basic_information(self):
-		return "%s\t%s" % (self.name, self.artist)
+		return "%s \\ %s" % (self.artist, self.name)

@@ -22,7 +22,8 @@ class Client(object):
 		self.update_current_song()
 		self.is_playing = False
 		self.seconds = 0
-		self.length = self.current_song.length
+		self.protect_thread = threading.Thread(target = self.protect)
+		self.protect_thread.daemon = True
 
 	def update_current_song(self):
 		page_source = None
@@ -37,25 +38,36 @@ class Client(object):
 		song_data = json.loads(new_json_data)
 
 		self.current_song = Song(song_data[0]) 
+		self.length = self.current_song.length
 		self.player.update_current_song(self.current_song)
+
+	def protect(self):
+		while True:
+			if self.is_playing:
+				self.seconds = self.seconds + 1
+				if self.seconds == 5:
+					self.next()
+			time.sleep(1.0)
 
 	def print_helper(self):
 		self.view.print_helper()
 
 	def play(self):
 		self.is_playing = True
+		self.seconds = 0
 		self.player.play_current_song()
 
 	def stop(self):
 		self.is_playing = False
-		self.seconds = 0
 		self.player.stop_playing_current_song()
 
 	def next(self):
+		self.is_playing = False
 		self.view.print_loading_information()
 		self.player.stop_playing_current_song()
 		self.update_current_song()
 		self.play()
+		self.display()
 
 	def pre_channel(self):
 		self.channel.pre_channel()
@@ -77,17 +89,14 @@ class Client(object):
 		sys.exit()
 
 	def display(self):
-		while True:
-			if self.is_playing == True:
-				self.seconds = self.seconds + 1
-				self.view.print_song_information(self.seconds, self.current_song.get_basic_information())
-			else:
-				self.view.print_pause_information()
-				break
-			time.sleep(1.0)
+		if self.is_playing == True:
+			self.view.print_song_information(self.seconds, self.current_song.get_basic_information())
+		else:
+			self.view.print_pause_information()
 
 	def start(self):
 		self.play()
+		self.protect_thread.start()
 		while True:
 			self.display()
 			i = getch._Getch()

@@ -13,7 +13,7 @@ class View(object):
 
 	def print_header(self):
 		os.system('clear')
-		print self.prefix + u"正在播放 >>> %s\t%s" % (self.song_information, self.convert_seconds_to_minutes())
+		print self.prefix + u"正在播放 >>> " + self.song_information
 
 	def update_header(self):
 		self.print_header()
