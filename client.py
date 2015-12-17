@@ -45,7 +45,7 @@ class Client(object):
 		while True:
 			if self.is_playing:
 				self.seconds = self.seconds + 1
-				if self.seconds == 5:
+				if self.seconds == self.length:
 					self.next()
 			time.sleep(1.0)
 

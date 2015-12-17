@@ -2,6 +2,8 @@
 import os
 import threading
 import time
+import sys
+from termcolor import colored
 from channel import Channel
 
 class View(object):
@@ -13,7 +15,7 @@ class View(object):
 
 	def print_header(self):
 		os.system('clear')
-		print self.prefix + u"正在播放 >>> " + self.song_information
+		print self.prefix + colored(u"正在播放 >>> ", 'cyan') + self.song_information + "\r"
 
 	def update_header(self):
 		self.print_header()
@@ -30,25 +32,27 @@ class View(object):
 
 	def print_pause_information(self):
 		os.system('clear')
-		print self.prefix + u"点击P键来播放音乐"
+		print self.prefix + colored(u"点击P键来播放音乐\r", 'green')
 		self.print_channel()
 
 	def print_channel(self):
 		current_channel = self.channel.current_channel
 		channel_list = self.channel.channel_list
 		for i in range(len(channel_list)):
+			info = ""
 			if i != current_channel:
-				print "   %s" % (channel_list[i])
+				info = colored(u"   %s\r"  % (channel_list[i]), 'white')
 			else:
-				print " > %s" % (channel_list[i])
+				info = colored(u" > %s\r" % (channel_list[i]), 'magenta')
+			print info
 
 	def print_exit_informaton(self):
 		os.system('clear')
-		print u"(￣▽￣)Bye~"
+		print u"(￣▽￣)Bye~"	
 
 	def print_loading_information(self):
 		os.system('clear')
-		print self.prefix + u'载入下一曲...'
+		print self.prefix + colored(u'载入下一曲...\r', 'blue')
 		self.print_channel()
 
 	def print_helper(self):
