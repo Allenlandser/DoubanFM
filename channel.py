@@ -13,7 +13,7 @@ class Channel(object):
 		try:
 			page_source = urllib.urlopen(self.channel_cul)
 		except urllib2.HTTPError:
-			print "Get current song information failed"
+			print "Get channel information failed"
 		page_data = page_source.read()
 		json_data =json.loads(page_data)
 
@@ -23,10 +23,8 @@ class Channel(object):
 	def pre_channel(self):
 		if self.current_channel > 0:
 			self.current_channel = self.current_channel - 1
-			print self.current_channel
 
 
 	def next_channel(self):
 		if self.current_channel < len(self.channel_list) - 1:
 			self.current_channel = self.current_channel + 1
-			print self.current_channel

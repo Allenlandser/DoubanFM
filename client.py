@@ -21,6 +21,7 @@ class Client(object):
 		self.view = View(self.channel)
 		self.update_current_song()
 		self.is_playing = False
+		self.is_display_help = False
 		self.seconds = 0
 		self.protect_thread = threading.Thread(target = self.protect)
 		self.protect_thread.daemon = True
@@ -50,7 +51,7 @@ class Client(object):
 			time.sleep(1.0)
 
 	def print_helper(self):
-		self.view.print_helper()
+		self.is_display_help = not self.is_display_help
 
 	def play(self):
 		self.is_playing = True
@@ -89,10 +90,13 @@ class Client(object):
 		sys.exit()
 
 	def display(self):
-		if self.is_playing == True:
-			self.view.print_song_information(self.seconds, self.current_song.get_basic_information())
+		if self.is_display_help == False:
+			if self.is_playing == True:
+				self.view.print_song_information(self.seconds, self.current_song.get_basic_information())
+			else:
+				self.view.print_pause_information()
 		else:
-			self.view.print_pause_information()
+			self.view.print_helper();
 
 	def start(self):
 		self.play()

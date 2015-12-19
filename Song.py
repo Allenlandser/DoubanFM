@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from termcolor import colored
 
 class Song(object):
@@ -11,4 +12,4 @@ class Song(object):
 		self.length = song_data['length']
 
 	def get_basic_information(self):
-		return "%s \\ %s" % (colored(self.artist, 'red'), colored(self.name, 'yellow'))
+		return u"%s • %s" % (colored(self.artist, 'red'), colored(self.name, 'yellow'))

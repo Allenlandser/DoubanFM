@@ -63,7 +63,7 @@ class View(object):
 		print u'N --> 下一曲'
 		print u'I --> 上一个频道'
 		print u'K --> 下一个频道'
-		print u'H --> 显示操作手册'
+		print u'H --> 显示/关闭操作手册'
 		print u'Q --> 退出'
 
 	def convert_seconds_to_minutes(self):
